@@ -21,14 +21,39 @@ public partial class UserWindow : Window
         _albumData = App.Services.GetRequiredService<IAlbumData>();
         _songData = App.Services.GetRequiredService<ISongData>();
 
-        LoadMusicians();
+        //LoadMusicians();
+        LoadMusiciansThreaded();
     }
 
-    private async void LoadMusicians()
+    private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-        var musicians = await _musicianData.GetAllAsync();
-        MusicianList.ItemsSource = musicians;
+        LoadMusiciansThreaded();
     }
+
+    //private async void LoadMusicians()
+    //{
+    //    var musicians = await _musicianData.GetAllAsync();
+    //    MusicianList.ItemsSource = musicians;
+    //}
+
+    private void LoadMusiciansThreaded()
+    {
+        new Thread(async () =>
+        {
+            var musicians = await _musicianData.GetAllAsync();
+
+            Dispatcher.Invoke(() =>
+            {
+                MusicianList.ItemsSource = musicians;
+            });
+
+        })
+        {
+            IsBackground = true
+        }.Start();
+    }
+
+
 
     private async void MusicianList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
