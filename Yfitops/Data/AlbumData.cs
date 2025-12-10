@@ -24,4 +24,11 @@ public class AlbumData : IAlbumData
             new { MusicianId = musicianId }
         );
     }
+    public async Task DeleteAsync(int albumId)
+    {
+        using var conn = new SqliteConnection(_connection);
+        await conn.ExecuteAsync("DELETE FROM Albums WHERE Id = @Id", new { Id = albumId });
+    }
+
+
 }

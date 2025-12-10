@@ -50,16 +50,11 @@ public partial class LoginWindow : Window
         this.Close();
     }
 
-    private async void Register_Click(object sender, RoutedEventArgs e)
+    private void Register_Click(object sender, RoutedEventArgs e)
     {
-        string username = UsernameBox.Text;
-        string password = PasswordBox.Password;
-
-        bool ok = await _userService.Register(username, password, UserRole.User);
-
-        if (ok)
-            MessageBox.Show("Registration successful!");
-        else
-            MessageBox.Show("Username already exists.");
+        var reg = new RegisterWindow();
+        reg.ShowDialog();
     }
+
+
 }

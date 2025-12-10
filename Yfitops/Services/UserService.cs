@@ -49,6 +49,13 @@ public class UserService
         await _repo.AddAsync(user);
         return true;
     }
+    public static string HashPasswordStatic(string password, string salt)
+    {
+        using var sha = SHA256.Create();
+        var bytes = Encoding.UTF8.GetBytes(password + salt);
+        var hash = sha.ComputeHash(bytes);
+        return Convert.ToBase64String(hash);
+    }
 
     public async Task<bool> Login(string username, string password)
     {

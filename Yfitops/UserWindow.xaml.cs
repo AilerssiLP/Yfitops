@@ -1,27 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using Yfitops.Data;
+using Yfitops.Models;
 
-namespace Yfitops
+namespace Yfitops;
+
+public partial class UserWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for UserWindow.xaml
-    /// </summary>
-    public partial class UserWindow : Window
+    private readonly IMusicianData _musicianData;
+    private readonly IAlbumData _albumData;
+    private readonly ISongData _songData;
+
+    public UserWindow()
     {
-        public UserWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
+        _musicianData = App.Services.GetRequiredService<IMusicianData>();
+        _albumData = App.Services.GetRequiredService<IAlbumData>();
+        _songData = App.Services.GetRequiredService<ISongData>();
+
+        LoadMusicians();
+    }
+
+    private async void LoadMusicians()
+    {
+        var musicians = await _musicianData.GetAllAsync();
+        MusicianList.ItemsSource = musicians;
+    }
+
+    private async void MusicianList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        if (MusicianList.SelectedItem is not Musician musician)
+            return;
+
+        var albums = await _albumData.GetByMusicianAsync(musician.Id);
+        AlbumList.ItemsSource = albums;
+
+        SongList.ItemsSource = null; 
+    }
+
+    private async void AlbumList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        if (AlbumList.SelectedItem is not Album album)
+            return;
+
+        var songs = await _songData.GetByAlbumAsync(album.Id);
+        SongList.ItemsSource = songs;
+    }
+    private void Logout_Click(object sender, RoutedEventArgs e)
+    {
+        new LoginWindow().Show();
+        Close();
     }
 }

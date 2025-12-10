@@ -24,4 +24,17 @@ public class SongData : ISongData
             new { AlbumId = albumId }
         );
     }
+    public async Task DeleteByAlbumAsync(int albumId)
+    {
+        using var conn = new SqliteConnection(_connection);
+        await conn.ExecuteAsync("DELETE FROM Songs WHERE AlbumId = @AlbumId", new { AlbumId = albumId });
+    }
+
+    public async Task DeleteAsync(int songId)
+    {
+        using var conn = new SqliteConnection(_connection);
+        await conn.ExecuteAsync("DELETE FROM Songs WHERE Id = @Id", new { Id = songId });
+    }
+
+
 }

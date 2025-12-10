@@ -1,13 +1,43 @@
 ﻿<Window x:Class="Yfitops.UserWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="User Panel" Height="300" Width="400">
+        Title="User Panel" Height="500" Width="800"
+        WindowStartupLocation="CenterScreen">
 
-    <Grid>
-        <TextBlock Text="User Panel"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="24"/>
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel>
+            <TextBlock Text="Musicians" FontSize="18" Margin="0 0 0 10"/>
+            <ListBox x:Name="MusicianList" Height="350" SelectionChanged="MusicianList_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding StageName}" FontSize="14"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </StackPanel>
+        <Button Content="Logout" Height="40" Margin="360,0,0,354" Click="Logout_Click" Grid.Column="1"/>
+        <StackPanel Grid.Column="1" Margin="20,35,0,0">
+            <TextBlock Text="Albums" FontSize="18"/>
+            <ListBox x:Name="AlbumList" Height="150" SelectionChanged="AlbumList_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Title}" FontSize="14"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+
+            <TextBlock Text="Songs" FontSize="18" Margin="0 20 0 0"/>
+            <ListBox x:Name="SongList" Height="150"/>
+        </StackPanel>
+
+
     </Grid>
 
 </Window>

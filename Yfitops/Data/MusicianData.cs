@@ -7,6 +7,14 @@ public class MusicianData : IMusicianData
 {
     private readonly string _connection = "Data Source=app.db";
 
+    public async Task<IEnumerable<Musician>> GetAllAsync()
+    {
+        using var conn = new SqliteConnection(_connection);
+        return await conn.QueryAsync<Musician>(
+            "SELECT * FROM Musicians;"
+        );
+    }
+
     public async Task AddAsync(Musician musician)
     {
         using var conn = new SqliteConnection(_connection);
