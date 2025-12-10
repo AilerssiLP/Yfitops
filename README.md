@@ -1,6 +1,6 @@
-Aplikácie pre hudobníkov a jejich fanúšikov ktorý môžu zdieľať a vypočuť si jejich skladby.
+Aplikácia pre hudobníkov a ich fanúšikov ktorý môžu zdieľať a vypočuť si ich skladby.
 
 Technologicky stack:
-C#, .Net wpf, sqllite.
+C#, .Net wpf, SQLlite.
 
 Robene vo visual studio 2022
