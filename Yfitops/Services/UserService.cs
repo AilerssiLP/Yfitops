@@ -47,6 +47,7 @@ public class UserService
         };
 
         await _repo.AddAsync(user);
+        LogService.Write($"Registered username '{user.Username}'. Role = {user.Role}");
         return true;
     }
     public static string HashPasswordStatic(string password, string salt)
@@ -65,14 +66,19 @@ public class UserService
         var hash = HashPassword(password, user.Salt);
 
         if (hash != user.PasswordHash)
+        {
+            LogService.Write($"FAILED login attempt for username '{user.Username}'");
             return false;
+        }
 
         CurrentUser = user;
+        LogService.Write($"User '{user.Username}' logged in. Role = {user.Role}");
         return true;
     }
 
     public void Logout()
     {
         CurrentUser = null;
+
     }
 }

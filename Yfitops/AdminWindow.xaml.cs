@@ -81,7 +81,7 @@ public partial class AdminWindow : Window
             return;
 
         await _userData.DeleteAsync(user.Id);
-
+        LogService.Write($"Admin '{_userService.CurrentUser.Username}' deleted user '{user.Username}' (ID={user.Id}).");
         LoadUsers();
         LoadMusicians();
         AlbumList.ItemsSource = null;
@@ -99,6 +99,9 @@ public partial class AdminWindow : Window
 
         await _songData.DeleteByAlbumAsync(album.Id);
         await _albumData.DeleteAsync(album.Id);
+        MessageBox.Show("Album and its songs deleted.");
+
+        LogService.Write($"Admin '{_userService.CurrentUser.Username}' deleted album '{album.Title}' (ID={album.Id}).");
 
         MusicianList_SelectionChanged(null, null);
     }
@@ -112,6 +115,9 @@ public partial class AdminWindow : Window
         }
 
         await _songData.DeleteAsync(song.Id);
+        MessageBox.Show("Song deleted.");
+        LogService.Write($"Admin '{_userService.CurrentUser.Username}' deleted song '{song.Title}' (ID={song.Id}).");
+
         AlbumList_SelectionChanged(null, null);
     }
 
@@ -143,6 +149,7 @@ public partial class AdminWindow : Window
         await _userData.UpdateRoleAsync(user);
 
         MessageBox.Show("Role updated.");
+        LogService.Write($"Admin '{_userService.CurrentUser.Username}' changed role of user '{user.Username}' to {user.Role}.");
         LoadUsers();
     }
 

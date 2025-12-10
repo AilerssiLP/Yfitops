@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Security.Policy;
+using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Yfitops.Data;
 using Yfitops.Models;
@@ -25,7 +26,7 @@ public partial class MusicianWindow : Window
         _songData = App.Services.GetRequiredService<ISongData>();
 
         LoadMusicianProfile();
-        LoadAlbums();   // <-- Missing before
+        LoadAlbums();   
     }
 
     private async void LoadMusicianProfile()
@@ -76,6 +77,8 @@ public partial class MusicianWindow : Window
             Title = name
         });
 
+        LogService.Write($"Musician '{_musician.StageName}' created album '{name}'.");
+
         LoadAlbums();
     }
 
@@ -94,6 +97,8 @@ public partial class MusicianWindow : Window
             AlbumId = album.Id,
             Title = song
         });
+
+        LogService.Write($"Musician '{_musician.StageName}' added song '{song}' to album ID={album.Id}.");
 
         AlbumList_SelectionChanged(null, null);
     }
@@ -131,6 +136,7 @@ public partial class MusicianWindow : Window
     private void Logout_Click(object sender, RoutedEventArgs e)
     {
         new LoginWindow().Show();
+        LogService.Write($"Musician '{_musician.StageName}' logged out.");
         Close();
     }
 }

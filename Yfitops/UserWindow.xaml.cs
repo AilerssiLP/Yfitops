@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Yfitops.Data;
 using Yfitops.Models;
+using Yfitops.Services;
 
 namespace Yfitops;
 
@@ -10,11 +11,12 @@ public partial class UserWindow : Window
     private readonly IMusicianData _musicianData;
     private readonly IAlbumData _albumData;
     private readonly ISongData _songData;
+    private readonly UserService _userService;
 
     public UserWindow()
     {
         InitializeComponent();
-
+        _userService = App.Services.GetRequiredService<UserService>();
         _musicianData = App.Services.GetRequiredService<IMusicianData>();
         _albumData = App.Services.GetRequiredService<IAlbumData>();
         _songData = App.Services.GetRequiredService<ISongData>();
@@ -49,7 +51,9 @@ public partial class UserWindow : Window
     }
     private void Logout_Click(object sender, RoutedEventArgs e)
     {
+        LogService.Write($"User '{_userService.CurrentUser?.Username}' logged out.");
         new LoginWindow().Show();
         Close();
     }
+
 }
