@@ -1,0 +1,27 @@
+﻿<Window x:Class="Yfitops.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Login" Height="300" Width="400"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+
+        <StackPanel>
+
+            <TextBlock Text="Login" FontSize="26" Margin="0 0 0 20"/>
+
+            <TextBlock Text="Username:"/>
+            <TextBox x:Name="UsernameBox" Width="200" Height="30" Margin="0 5"/>
+
+            <TextBlock Text="Password:"/>
+            <PasswordBox x:Name="PasswordBox" Width="200" Height="30" Margin="0 5"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0 20">
+                <Button Content="Login" Width="100" Margin="5" Click="Login_Click"/>
+                <Button Content="Register" Width="100" Margin="5" Click="Register_Click"/>
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+
+</Window>

@@ -1,0 +1,13 @@
+﻿<Window x:Class="Yfitops.UserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="User Panel" Height="300" Width="400">
+
+    <Grid>
+        <TextBlock Text="User Panel"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="24"/>
+    </Grid>
+
+</Window>
